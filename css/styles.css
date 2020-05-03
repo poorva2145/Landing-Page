@@ -76,6 +76,11 @@ section {
     padding-left: 2%;
 }
 
+.buttonDisplay {
+    background: #75daad;
+
+}
+
 .navbar__menu .menu__link {
     font-weight: bold;
     text-decoration: none;

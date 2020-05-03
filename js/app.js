@@ -19,13 +19,11 @@
 */
 
 // navigation Bar global variable 
-const navBar = document.getElementById('navbar__list');
+const navBar = document.querySelector('.navbar__menu');
 
 // sections will contain NodeList of all sections present in document
 const sections = document.querySelectorAll('section');
 
-// it will contain NodeList of all nav bar links 
-const sectionLinks = document.querySelectorAll('.navbar__menu a');
 
 /**
  * End Global Variables
@@ -43,30 +41,49 @@ const sectionLinks = document.querySelectorAll('.navbar__menu a');
 
 // build the nav
 function buildNavBar() {
-    //  navBarCode defines the innerHTML that should be inserted inside navBar
-    // initially it is empty assuming zero sections 
-    let navBarCode = '';
+    // building <ui></ui> element in which list will be inserted
+    const newUL = document.createElement('ul');
 
-    // now we will traverse to each section and will include it in navBar
+    // setting id of <ul></ul> element 
+    newUL.setAttribute("id", "navbar__list");
+
+    // now we will traverse to each section and will include it in newUL
     sections.forEach(section => {
-        // for referencing section in navBar, we need section.id which will be included
-        // in anchor tag
+        // created new element with <li></li> tag
+        const newList = document.createElement('li');
+
         const sectionId = section.id;
+
+        // created new element with anchor tag
+        const newAnchorTag = document.createElement('a');
 
         // for showing section number in navBar,we need section.dataset.nav
         const sectionDataNav = section.dataset.nav;
 
-        // instead of appending each section in navBar one by one, we are concatenating
-        // the code and will append to navBar only once to improve performance
-        navBarCode += `<li><a class="menu__link" href="#${sectionId}">${sectionDataNav}</a></li>`;
+        // inserting innerHTML in anchor tag
+        newAnchorTag.innerHTML = `${sectionDataNav}`;
+
+        // setting class of anchor tag
+        newAnchorTag.setAttribute("class", `menu__link`);
+        newAnchorTag.setAttribute("id", `${sectionDataNav}`);
+
+        // appending newAnchorTag to newList
+        newList.appendChild(newAnchorTag);
+
+        // appending newList to newUL
+        newUL.appendChild(newList);
+
     });
 
-    // adding navBarCode to navBar.innerHTML
-    navBar.innerHTML = navBarCode;
+    // finally after insering all section list in newUL, 
+    // appending newUL to navBar
+    navBar.appendChild(newUL);
 }
 
 buildNavBar();
 
+// it will contain NodeList of all nav bar links 
+const sectionLinks = document.querySelectorAll('.navbar__menu a');
 
 
 // Add class 'active' to section when near top of viewport
@@ -79,12 +96,23 @@ const offset = (section) => {
 // function to add your-active-class in classList of an section
 const addActiveClass = (section) => {
     section.classList.add('your-active-class');
+
+    const sectionDataNav = section.dataset.nav;
+
+    const navBarSectionLink = document.getElementById(sectionDataNav);
+    navBarSectionLink.classList.add('buttonDisplay');
+
 }
 
 // function to remove your-active-class from classList of an section
 const removeActiveClass = (section) => {
     section.classList.remove('your-active-class');
+    const sectionDataNav = section.dataset.nav;
+
+    const navBarSectionLink = document.getElementById(sectionDataNav);
+    navBarSectionLink.classList.remove('buttonDisplay');
 }
+
 
 // adding event listener, whenever users scrolls the window
 window.addEventListener('scroll', function () {
@@ -107,11 +135,26 @@ window.addEventListener('scroll', function () {
 
 
 // Scroll to anchor ID using scrollTO event
+
+
+
 const scrollAnchorId = () => {
     sectionLinks.forEach(sectionLink => {
+
+        // adding click event listener for each nav bar list
         sectionLink.addEventListener('click', () => {
+
+            // navigating to each section and checking whether this section anchor 
+            // tag has been called or not
             sections.forEach(section => {
-                section.addEventListener('click', sectionScroll(sectionLink));
+
+                const sectionDataNav = section.dataset.nav;
+                const idAttribute = sectionLink.getAttribute("id");
+
+                if (sectionDataNav == idAttribute) {
+                    // if its matches then go to that section
+                    section.scrollIntoView();
+                }
             });
         });
     });
@@ -129,6 +172,7 @@ scrollAnchorId();
 // Build menu 
 
 // Scroll to section on link click
+
 
 // Set sections as active
 
