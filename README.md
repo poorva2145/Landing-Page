@@ -7,7 +7,7 @@ It's a multi-section landing page.
 Click on clone or download button and copy the url and run the following command.
 
 ```bash
-git clone <url>
+git clone https://github.com/poorva2145/Landing-Page.git
 ```
 
 ## Languages used
@@ -24,11 +24,9 @@ git clone <url>
 
 ## What did we learned?
 
-The landing page project presented the opportunity to fully combine the skills in HTML, CSS, and JavaScript into a large project. It helped to discover how best to combine these three technologies in a complex application.
+The landing page project helped to discover how best to combine HTML, CSS, and JavaScript technologies to build a large complex project.
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-
-## License
-[@Poorva]
